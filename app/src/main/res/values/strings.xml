@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Loan</string>
+    <string name="dialog_choose_month">choose month</string>
+    <string name="eur">EUR</string>
+    <string name="eur_10000">10000 EUR</string>
+    <string name="eur_2000">2000 EUR</string>
+    <string name="months_6">6 months</string>
+    <string name="months_60">60 months</string>
+    <string name="period">Period</string>
+    <string name="amount">Amount</string>
+    <string name="submit_the_loan">Submit the loan</string>
+    <string name="identity_number">Identity number</string>
+    <string name="login">Login</string>
+    <string name="submit">Submit</string>
+    <string name="update">Update</string>
+    <string name="empty_id_error">Please inter identity number</string>
+    <string name="invalid_id_error">Please inter a valid identity number</string>
+    <string name="loan_result">Loan Result</string>
+    <string name="loan_purchased_result">Success purchased</string>
+    <string name="submit_request">Submit Request</string>
+    <string name="requested_on">Requested on</string>
+    <string name="back_to_home">Back to Home</string>
+    <string name="installment_duration">Installment duration</string>
+    <string name="loan_period">Loan period</string>
+</resources>

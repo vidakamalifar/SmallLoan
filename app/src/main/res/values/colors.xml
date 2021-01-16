@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#440285</color>
+    <color name="purple_500">#2B0055</color>
+    <color name="purple_700">#1B0135</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Dialog Background Color -->
+    <color name="dialog_background_color">#E6E6E6</color>
+    <color name="background_dialog_night_color">#2B2929</color>
+
+    <color name="orange_thumb">#BCFF9800</color>
+
+    <color name="red_error">#D63024</color>
+
+    <color name="green">#4CAF50</color>
+
+    <color name="light_red">#FFC107</color>
+
+    <color name="light_blue">#03A9F4</color>
+
+    <color name="dark_blue">#8D1B0135</color>
+
+
+</resources>

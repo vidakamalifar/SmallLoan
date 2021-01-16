@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="message"
+            type="String" />
+
+        <variable
+            name="period"
+            type="String" />
+
+        <variable
+            name="amount"
+            type="String" />
+
+        <variable
+            name="date"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/BackgroundDialogStyle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/padding_20_dp">
+
+        <TextView
+            android:id="@+id/tvResultLoanTitle"
+            style="@style/TitleTextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:gravity="center"
+            android:text="@string/loan_result"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="loan accepted" />
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:src="@drawable/cash_stack"
+            app:layout_constraintBottom_toTopOf="@+id/tvPeriodTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvResultLoanTitle" />
+
+        <TextView
+            android:id="@+id/tvPeriodTitle"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:text="@string/loan_period"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/guideline10"
+            tools:text="loan accepted" />
+
+        <TextView
+            android:id="@+id/tvPeriod"
+            style="@style/LoanTitleTextViewStyle"
+            android:text="@{period}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintTop_toBottomOf="@+id/guideline10"
+            tools:text="6 Months" />
+
+        <TextView
+            android:id="@+id/tvAmountTitle"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:text="@string/installment_duration"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPeriodTitle"
+            tools:text="loan accepted" />
+
+        <TextView
+            android:id="@+id/tvAmount"
+            style="@style/LoanTitleTextViewStyle"
+            android:text="@{amount}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintTop_toBottomOf="@+id/tvPeriodTitle"
+            tools:text="6500 EUR" />
+
+        <TextView
+            android:id="@+id/tvDateTitle"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:text="@string/requested_on"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAmount"
+            tools:text="loan accepted" />
+
+        <TextView
+            android:id="@+id/tvDate"
+            style="@style/LoanTitleTextViewStyle"
+            android:text="@{date}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintTop_toBottomOf="@+id/tvAmount"
+            tools:text="15-01-2020" />
+
+        <TextView
+            android:id="@+id/tvResultLoan"
+            style="@style/TextViewStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_32_dp"
+            android:layout_marginLeft="@dimen/margin_16_dp"
+            android:layout_marginRight="@dimen/margin_16_dp"
+            android:gravity="center"
+            android:text="@{message}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDate"
+            tools:text="loan accepted" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAcceptLoan"
+            style="@style/LoanButtonStyle"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:backgroundTint="@color/green"
+            android:text="@string/submit"
+            app:layout_constraintEnd_toStartOf="@+id/guideline8"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvResultLoan" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnRejectLoan"
+            style="@style/LoanButtonStyle"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:backgroundTint="@color/light_red"
+            android:text="@string/update"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline8"
+            app:layout_constraintTop_toBottomOf="@+id/tvResultLoan" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBackToHome"
+            style="@style/LoanButtonStyle"
+            android:layout_margin="@dimen/margin_16_dp"
+            android:backgroundTint="@color/light_red"
+            android:text="@string/back_to_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnRejectLoan"
+            android:visibility="gone"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.3" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
