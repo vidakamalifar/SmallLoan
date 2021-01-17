@@ -7,9 +7,9 @@ import com.inBank.loan.util.Constant.NOT_ALLOWED
 
 
 class LoanCalculator {
-    
-    companion object {
 
+    companion object {
+        @JvmStatic
         fun loanCalculator(period: Int, amount: Float, creditModifier: Float): String {
             if (creditModifier > 0) {
                 val creditScore = (creditModifier.div(amount)) * period
@@ -20,7 +20,7 @@ class LoanCalculator {
             return "The credit scoring system shows that you have debt in banking system. While you have debt in other banks," +
                     " you are not allowed to request a new loan in the banking system."
         }
-
+        @JvmStatic
         private fun checkLoan(period: Int, amount: Float, creditScore: Float): String {
             return when {
                 creditScore > 1 -> {

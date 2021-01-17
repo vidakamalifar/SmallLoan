@@ -10,7 +10,7 @@ import android.view.Window
 abstract class BaseDialog(context: Context) {
 
     private lateinit var parentView: View
-    private var dialog: Dialog = Dialog(context)
+    var dialog: Dialog = Dialog(context)
 
     init {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

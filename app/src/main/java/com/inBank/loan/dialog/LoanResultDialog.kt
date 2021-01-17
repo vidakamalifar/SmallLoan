@@ -1,8 +1,7 @@
 package com.inBank.loan.dialog
 
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import com.inBank.loan.MyApplication
 import com.inBank.loan.R
@@ -37,9 +36,21 @@ class LoanResultDialog(
         )
         setParentView(binding.root)
 
+
         setData()
 
         show()
+
+        //set full screen and style to dialog
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(dialog.window!!.attributes)
+        lp.width = WindowManager.LayoutParams.MATCH_PARENT
+        lp.height = WindowManager.LayoutParams.MATCH_PARENT
+        lp.gravity = Gravity.BOTTOM
+        dialog.setCancelable(false)
+        lp.windowAnimations = R.style.DialogLoanResult
+        dialog.window!!.attributes = lp
+
 
         setInterface()
 

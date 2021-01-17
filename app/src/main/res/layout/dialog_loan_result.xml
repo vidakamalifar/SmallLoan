@@ -24,11 +24,7 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/BackgroundDialogStyle"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingBottom="@dimen/padding_20_dp">
+    <androidx.constraintlayout.widget.ConstraintLayout style="@style/DialogLoanResult">
 
         <TextView
             android:id="@+id/tvResultLoanTitle"
@@ -122,8 +118,8 @@
             style="@style/TextViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_32_dp"
             android:layout_marginLeft="@dimen/margin_16_dp"
+            android:layout_marginTop="@dimen/margin_32_dp"
             android:layout_marginRight="@dimen/margin_16_dp"
             android:gravity="center"
             android:text="@{message}"
@@ -134,9 +130,7 @@
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            style="@style/VerticalGuidelineStyle"
             app:layout_constraintGuide_percent="0.5" />
 
 
@@ -166,16 +160,14 @@
             android:layout_margin="@dimen/margin_16_dp"
             android:backgroundTint="@color/light_red"
             android:text="@string/back_to_home"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnRejectLoan"
-            android:visibility="gone"/>
+            app:layout_constraintTop_toBottomOf="@+id/btnRejectLoan" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            style="@style/HorizontalGuidelineStyle"
             app:layout_constraintGuide_percent="0.3" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
