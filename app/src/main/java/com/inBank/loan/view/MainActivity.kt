@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -14,9 +13,10 @@ import com.inBank.loan.dialog.ChooseMonthDialog
 import com.inBank.loan.interfaces.mainactivityinterface.MainPresenterInterface
 import com.inBank.loan.interfaces.PeriodDialogInterface
 import com.inBank.loan.interfaces.mainactivityinterface.ViewMainActivityInterface
+import com.inBank.loan.model.LoanRequest
+import com.inBank.loan.model.LoanTerms
 import com.inBank.loan.presenter.MainActivityPresenter
-import com.inBank.loan.util.Constant.AMOUNT_VALUE
-import com.inBank.loan.util.Constant.PERIOD_VALUE
+import com.inBank.loan.util.Constant.LOAN_OBJECT_VALUE
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), PeriodDialogInterface,
     private lateinit var binding: ActivityMainBinding
 
     //presenter
-    private var mainActivityInterface: MainPresenterInterface? = null
+    private lateinit var mainActivityInterface: MainPresenterInterface
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,17 +40,18 @@ class MainActivity : AppCompatActivity(), PeriodDialogInterface,
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        //initial interfaces
         mainActivityInterface = MainActivityPresenter(this)
 
         //initial min period
-        binding.period = 6
+        binding.period = LoanTerms.MINIMUM_LOAN_PERIOD.value
 
         binding.chooseMonthDialog = this
 
         binding.etAmount.addTextChangedListener(textWatcher)
 
         //initial min amount
-        binding.amount = 2000
+        binding.amount = LoanTerms.MINIMUM_LOAN_AMOUNT.value
 
         setListener()
     }
@@ -64,14 +65,14 @@ class MainActivity : AppCompatActivity(), PeriodDialogInterface,
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             if (s != null && s.toString().isNotEmpty()) {
-                mainActivityInterface?.checkAmount(Integer.parseInt(s.toString()))
+                mainActivityInterface.checkIsValidAmount(Integer.parseInt(s.toString()))
             }
         }
     }
 
     private fun setListener() {
         binding.btnSubmit.setOnClickListener {
-            goToLoanActivity()
+            mainActivityInterface.prepareLoanData(binding.amount, binding.period)
         }
 
         amountSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -106,15 +107,6 @@ class MainActivity : AppCompatActivity(), PeriodDialogInterface,
         })
     }
 
-    private fun goToLoanActivity() {
-        Intent(this, LoanActivity::class.java).also {
-            it.putExtra(AMOUNT_VALUE, binding.amount)
-            it.putExtra(PERIOD_VALUE, binding.period)
-            startActivity(it)
-        }
-
-    }
-
     override fun inflateMonthDialog() {
         ChooseMonthDialog(this)
     }
@@ -123,7 +115,7 @@ class MainActivity : AppCompatActivity(), PeriodDialogInterface,
         binding.period = month
     }
 
-    override fun showAmountResult(validAmount: Boolean, amount: Int) {
+    override fun showValidityAmountResult(validAmount: Boolean, amount: Int) {
         if (validAmount) {
             binding.btnSubmit.isEnabled = true
             binding.amount = amount
@@ -131,6 +123,13 @@ class MainActivity : AppCompatActivity(), PeriodDialogInterface,
         } else {
             binding.btnSubmit.isEnabled = false
             binding.etAmount.setBackgroundResource(R.drawable.border_rounded_error_edit_text)
+        }
+    }
+
+    override fun goToLoanActivity(loanRequest: LoanRequest) {
+        Intent(this, LoanActivity::class.java).also {
+            it.putExtra(LOAN_OBJECT_VALUE, loanRequest)
+            startActivity(it)
         }
     }
 }

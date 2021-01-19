@@ -12,14 +12,14 @@ import com.inBank.loan.interfaces.LoanResultDialogInterface
 import com.inBank.loan.interfaces.loanactivityinterface.LoanPresenterInterface
 import com.inBank.loan.interfaces.loanactivityinterface.ViewLoanActivityInterface
 import com.inBank.loan.model.Client
+import com.inBank.loan.model.LoanRequest
 import com.inBank.loan.presenter.LoanActivityPresenter
-import com.inBank.loan.util.Constant.AMOUNT_VALUE
-import com.inBank.loan.util.Constant.PERIOD_VALUE
+import com.inBank.loan.util.Constant.LOAN_OBJECT_VALUE
 import com.inBank.loan.util.Utils
 import kotlinx.android.synthetic.main.activity_loan.*
 
 class LoanActivity : AppCompatActivity(),
-    ViewLoanActivityInterface, LoanResultDialogInterface {
+    ViewLoanActivityInterface {
 
     //data binding
     private lateinit var binding: ActivityLoanBinding
@@ -32,9 +32,7 @@ class LoanActivity : AppCompatActivity(),
     //load static user
     private val clients: List<Client> = myApplication.createClient()
 
-    private var amount: Float = 0F
-
-    private var period: Int = 0
+    private lateinit var loanRequest: LoanRequest
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,15 +40,16 @@ class LoanActivity : AppCompatActivity(),
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_loan)
 
-        loanActivityInterface = LoanActivityPresenter(this, clients)
+        //get value from intent
+        loanRequest = intent.getSerializableExtra(LOAN_OBJECT_VALUE) as LoanRequest
+
+        //initial presenter
+        loanActivityInterface = LoanActivityPresenter(this, clients, loanRequest)
 
         //actionbar
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = ""
 
-        //get value from intent
-        amount = intent.getIntExtra(AMOUNT_VALUE, 0).toFloat()
-        period = intent.getIntExtra(PERIOD_VALUE, 0)
 
         setListener()
 
@@ -62,36 +61,37 @@ class LoanActivity : AppCompatActivity(),
             //close keyboard
             Utils.dismissKeyboard(this@LoanActivity)
 
-            loanActivityInterface.checkIdInput(binding.etIdNumber.text.toString())
+            loanActivityInterface.processIdInput(binding.etIdNumber.text.toString())
         }
     }
 
-    override fun showAmountResult(message: String) {
-        LoanResultDialog(this, message, period, amount)
+    override fun showClientIdNumber(clientIdNumber: Long) {
+        binding.clientIdNumber = clientIdNumber
     }
 
-    override fun showInputError() {
+    override fun showLoanResult(loanRequest: LoanRequest) {
+        LoanResultDialog(this, loanRequest, object : LoanResultDialogInterface {
+            override fun purchasedLoan() {
+                Toast.makeText(
+                    this@LoanActivity,
+                    getString(R.string.loan_purchased_result), Toast.LENGTH_LONG
+                ).show()
+
+                onBackPressed()
+            }
+
+            override fun rejectLoan() {
+                onBackPressed()
+            }
+        })
+    }
+
+    override fun showEmptyInputError() {
         txtInputLayout.error = getString(R.string.empty_id_error)
     }
 
-    override fun login(isSuccess: Boolean) {
-        if (isSuccess) {
-            loanActivityInterface.calculateLoan(period, amount)
-        } else {
-            txtInputLayout.error = getString(R.string.invalid_id_error)
-        }
-    }
-
-    override fun purchasedLoan() {
-        Toast.makeText(
-            applicationContext,
-            getString(R.string.loan_purchased_result), Toast.LENGTH_LONG
-        ).show()
-        onBackPressed()
-    }
-
-    override fun rejectLoan() {
-        onBackPressed()
+    override fun showUserDoesNotExitError() {
+        txtInputLayout.error = getString(R.string.invalid_id_error)
     }
 
     override fun onSupportNavigateUp(): Boolean {

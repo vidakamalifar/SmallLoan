@@ -1,10 +1,14 @@
 package com.inBank.loan.interfaces.loanactivityinterface
 
+import com.inBank.loan.model.LoanRequest
+
 interface ViewLoanActivityInterface {
 
-    fun showAmountResult(message: String)
+    fun showClientIdNumber(clientIdNumber : Long)
 
-    fun showInputError()
+    fun showLoanResult(loanRequest: LoanRequest)
 
-    fun login(isSuccess : Boolean)
+    fun showEmptyInputError()
+
+    fun showUserDoesNotExitError()
 }

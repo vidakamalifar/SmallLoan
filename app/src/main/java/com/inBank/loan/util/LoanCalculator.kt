@@ -1,58 +1,67 @@
 package com.inBank.loan.util
 
-import com.inBank.loan.MyApplication
-import com.inBank.loan.util.Constant.ALLOWED
-import com.inBank.loan.util.Constant.AMOUNT_NOT_ALLOWED
-import com.inBank.loan.util.Constant.NOT_ALLOWED
+import android.content.res.Resources
+import com.inBank.loan.MyApplication.Companion.applicationContext
+import com.inBank.loan.R
+import com.inBank.loan.interfaces.LoanRequestInterface
+import com.inBank.loan.model.LoanRequest
+import com.inBank.loan.model.LoanStatus
 
 
 class LoanCalculator {
 
     companion object {
-        @JvmStatic
-        fun loanCalculator(period: Int, amount: Float, creditModifier: Float): String {
+        fun loanCalculator(
+            loanRequest: LoanRequest,
+            creditModifier: Float,
+            loanRequestInterface: LoanRequestInterface?
+        ) {
             if (creditModifier > 0) {
-                val creditScore = (creditModifier.div(amount)) * period
+                val creditScore = (creditModifier.div(loanRequest.amount)) * loanRequest.period
 
-                return checkLoan(period, amount, creditScore)
+                loanRequestInterface?.let {
+                    checkLoan(
+                        it,
+                        loanRequest,
+                        creditScore,
+                        creditModifier
+                    )
+                }
+                return
             }
-            MyApplication.setIsValidLoanRequest(NOT_ALLOWED)
-            return "The credit scoring system shows that you have debt in banking system. While you have debt in other banks," +
-                    " you are not allowed to request a new loan in the banking system."
+            loanRequest.status = LoanStatus.NOT_ALLOWED_GET_LOAN.status
+            loanRequest.message = applicationContext()?.getString(R.string.not_allowed_get_loan)
+
+            loanRequestInterface?.resultCheckingLoan(loanRequest)
         }
-        @JvmStatic
-        private fun checkLoan(period: Int, amount: Float, creditScore: Float): String {
-            return when {
+
+        private fun checkLoan(
+            loanRequestInterface: LoanRequestInterface,
+            loanRequest: LoanRequest,
+            creditScore: Float,
+            creditModifier: Float
+        ) {
+            val maxLoanAmount = (creditModifier * loanRequest.period)
+            when {
                 creditScore > 1 -> {
-                    val creditModifier = (creditScore * amount).div(period)
-
-                    MyApplication.setIsValidLoanRequest(ALLOWED)
-
-                    "As we checked your credit score, you are allowed to request this loan. Rather than that, the"+
-                    " the maximum amount of loan that you are able to request is:\n" +
-                            "€$creditModifier\n" +
-                            "Do you want to update your request or submit the current request?"
+                    loanRequest.status = LoanStatus.ALLOWED_TO_GET_LOAN.status
+                    loanRequest.message = applicationContext()
+                        ?.getString(R.string.allowed_get_more_loan, maxLoanAmount.toLong())
 
                 }
 
                 creditScore == 1F -> {
-                    MyApplication.setIsValidLoanRequest(ALLOWED)
-
-                    "As we checked your credit score, you are allowed to request this loan"
-
+                    loanRequest.status = LoanStatus.ALLOWED_TO_GET_LOAN.status
+                    loanRequest.message =
+                        applicationContext()?.getString(R.string.allowed_get_exact_loan)
                 }
                 else -> {
-                    val creditModifier = (creditScore * amount).div(period)
-
-                    MyApplication.setIsValidLoanRequest(AMOUNT_NOT_ALLOWED)
-
-                    "As we checked your credit score, you are NOT allowed for this request. " +
-                            "By considering your credit score in the banking system, the maximum amount for you to have a loan is:\n " +
-                            "€$creditModifier\n" +
-                            "You can update or cancel your request."
+                    loanRequest.status = LoanStatus.LOAN_AMOUNT_NOT_ALLOWED.status
+                    loanRequest.message = applicationContext()
+                        ?.getString(R.string.not_allowed_get_exact_loan, maxLoanAmount.toLong())
                 }
             }
-
+            loanRequestInterface.resultCheckingLoan(loanRequest)
         }
     }
 }

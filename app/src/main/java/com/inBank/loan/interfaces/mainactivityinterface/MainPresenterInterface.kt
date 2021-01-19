@@ -2,5 +2,7 @@ package com.inBank.loan.interfaces.mainactivityinterface
 
 interface MainPresenterInterface {
 
-    fun checkAmount(amount: Int)
+    fun checkIsValidAmount(amount: Int)
+
+    fun prepareLoanData(amount: Int, period: Int)
 }
