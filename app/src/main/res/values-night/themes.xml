@@ -108,12 +108,14 @@
     <style name="HorizontalGuidelineStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">horizontal</item>
     </style>
 
     <!-- vertical guideline style. -->
     <style name="VerticalGuidelineStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
     </style>
 
 </resources>
