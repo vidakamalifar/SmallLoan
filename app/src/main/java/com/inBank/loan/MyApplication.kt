@@ -2,12 +2,17 @@ package com.inBank.loan
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.inBank.loan.model.Client
 
 class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        context = applicationContext
+        pref = context?.getSharedPreferences(Keys.PREFS_NAME, Context.MODE_PRIVATE)
+        editor = pref?.edit()
 
         createClient()
     }
@@ -25,21 +30,31 @@ class MyApplication : Application() {
         instance = this
     }
 
+
     companion object {
+        private var context: Context? = null
         private var instance: MyApplication? = null
+        private var pref: SharedPreferences? = null
+        private var editor: SharedPreferences.Editor? = null
 
-        var isValidLoan: Int = 0
 
-        fun applicationContext(): Context {
-            return instance!!.applicationContext
+        fun applicationContext(): Context? {
+            return instance?.applicationContext
         }
 
-        fun setIsValidLoanRequest(isValid: Int) {
-            isValidLoan = isValid
+        //set client identity number
+        fun setClientIdNumber(clientId: Long) {
+            editor?.putLong(Keys.CLIENT_ID_NUMBER, clientId)?.apply()
         }
 
-        fun getIsValidLoanRequest(): Int {
-            return isValidLoan
+        //get client identity number
+        fun getClientIdNumber(): Long? {
+            return pref?.getLong(Keys.CLIENT_ID_NUMBER, 0)
         }
+    }
+
+    private object Keys {
+        const val PREFS_NAME = "appSharedPrefName"
+        const val CLIENT_ID_NUMBER = "clientIdNumber"
     }
 }
