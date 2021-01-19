@@ -1,6 +1,5 @@
 package com.inBank.loan.util
 
-import android.content.res.Resources
 import com.inBank.loan.MyApplication.Companion.applicationContext
 import com.inBank.loan.R
 import com.inBank.loan.interfaces.LoanRequestInterface
@@ -65,9 +64,20 @@ class LoanCalculator {
                         applicationContext()?.getString(R.string.allowed_get_exact_loan)
                 }
                 else -> {
+                    if (maxLoanAmount < LoanTerms.MINIMUM_LOAN_AMOUNT.value) {
+                        maxLoanAmount = LoanTerms.MINIMUM_LOAN_AMOUNT.value.toFloat()
+                        val period = maxLoanAmount.div(creditModifier)
+
+                        loanRequest.message = applicationContext()
+                            ?.getString(R.string.not_allowed_get_loan_caused_period, period.toLong())
+
+                    } else {
+                        loanRequest.message = applicationContext()
+                            ?.getString(R.string.not_allowed_get_exact_loan, maxLoanAmount.toLong())
+                    }
+
                     loanRequest.status = LoanStatus.LOAN_AMOUNT_NOT_ALLOWED.status
-                    loanRequest.message = applicationContext()
-                        ?.getString(R.string.not_allowed_get_exact_loan, maxLoanAmount.toLong())
+
                 }
             }
             loanRequestInterface.resultCheckingLoan(loanRequest)
