@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="app_name">Loan</string>
     <string name="dialog_choose_month">choose month</string>
     <string name="eur">EUR</string>
@@ -13,13 +13,21 @@
     <string name="login">Login</string>
     <string name="submit">Submit</string>
     <string name="update">Update</string>
-    <string name="empty_id_error">Please inter identity number</string>
-    <string name="invalid_id_error">Please inter a valid identity number</string>
+    <string name="empty_id_error">Please enter identity number</string>
+    <string name="invalid_id_error">Please enter a valid identity number</string>
     <string name="loan_result">Loan Result</string>
     <string name="loan_purchased_result">Success purchased</string>
     <string name="submit_request">Submit Request</string>
     <string name="requested_on">Requested on</string>
     <string name="back_to_home">Back to Home</string>
-    <string name="installment_duration">Installment duration</string>
+    <string name="loan_requested">Loan requested</string>
     <string name="loan_period">Loan period</string>
+    <string name="months">\u0020months</string>
+    <string name="month_string">%1$d months</string>
+    <string name="allowed_get_more_loan"> As we checked your credit score, you are allowed to request this loan. Rather than that,
+        the maximum amount of loan that you are able to request is:\n %d EUR \n Do you want to update your request or submit the current request?</string>
+    <string name="allowed_get_exact_loan">As we checked your credit score, you are allowed to request this loan</string>
+    <string name="not_allowed_get_loan">The credit scoring system shows that you have debt in banking system. While you have debt in other banks, you are not allowed to request a new loan in the banking system.</string>
+    <string name="not_allowed_get_exact_loan">As we checked your credit score, you are NOT allowed for this request. By considering your credit score in the banking system, the maximum amount for you to have a loan is:\n
+        %d EUR \n You can update or cancel your request.</string>
 </resources>
