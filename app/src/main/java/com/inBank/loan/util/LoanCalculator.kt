@@ -6,6 +6,7 @@ import com.inBank.loan.R
 import com.inBank.loan.interfaces.LoanRequestInterface
 import com.inBank.loan.model.LoanRequest
 import com.inBank.loan.model.LoanStatus
+import com.inBank.loan.model.LoanTerms
 
 
 class LoanCalculator {
@@ -41,13 +42,21 @@ class LoanCalculator {
             creditScore: Float,
             creditModifier: Float
         ) {
-            val maxLoanAmount = (creditModifier * loanRequest.period)
+            var maxLoanAmount = (creditModifier * loanRequest.period)
             when {
                 creditScore > 1 -> {
-                    loanRequest.status = LoanStatus.ALLOWED_TO_GET_LOAN.status
-                    loanRequest.message = applicationContext()
-                        ?.getString(R.string.allowed_get_more_loan, maxLoanAmount.toLong())
+                    if (maxLoanAmount > LoanTerms.MAXIMUM_LOAN_AMOUNT.value)
+                        maxLoanAmount = LoanTerms.MAXIMUM_LOAN_AMOUNT.value.toFloat()
 
+                    loanRequest.status = LoanStatus.ALLOWED_TO_GET_LOAN.status
+                    if (maxLoanAmount == loanRequest.amount) {
+                        loanRequest.message =
+                            applicationContext()?.getString(R.string.allowed_get_exact_loan)
+                    } else {
+                        loanRequest.message = applicationContext()
+                            ?.getString(R.string.allowed_get_more_loan, maxLoanAmount.toLong())
+
+                    }
                 }
 
                 creditScore == 1F -> {
