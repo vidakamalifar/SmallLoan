@@ -23,11 +23,12 @@
     <string name="loan_requested">Loan requested</string>
     <string name="loan_period">Loan period</string>
     <string name="months">\u0020months</string>
-    <string name="month_string">%1$d months</string>
+    <string name="month_string">%d months</string>
     <string name="allowed_get_more_loan"> As we checked your credit score, you are allowed to request this loan. Rather than that,
         the maximum amount of loan that you are able to request is:\n %d EUR \n Do you want to update your request or submit the current request?</string>
     <string name="allowed_get_exact_loan">As we checked your credit score, you are allowed to request this loan</string>
     <string name="not_allowed_get_loan">The credit scoring system shows that you have debt in banking system. While you have debt in other banks, you are not allowed to request a new loan in the banking system.</string>
     <string name="not_allowed_get_exact_loan">As we checked your credit score, you are NOT allowed for this request. By considering your credit score in the banking system, the maximum amount for you to have a loan is:\n
         %d EUR \n You can update or cancel your request.</string>
+    <string name="not_allowed_get_loan_caused_period">As we checked your credit score, you are allowed for this request, but by considering your credit score you should choose %d months for the loan period</string>
 </resources>
