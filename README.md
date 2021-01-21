@@ -42,6 +42,6 @@
 
 <h1><span style="font-weight: 400;">Screenshots</span></h1>
 <p><span style="font-weight: 400;">Here is the designed UIs for this project:</span></p>
-
-<img src="https://i.ibb.co/jrmyr6y/2021-01-16-20-38-33.jpg"></img>
-<img src="https://i.ibb.co/TT3hL7Z/2021-01-16-20-38-23.jpg"></img>
+<img style="width:100px" src="https://i.ibb.co/jrmyr6y/2021-01-16-20-38-33.jpg"></img>
+<br>
+<img src="https://i.ibb.co/c3chQyG/2021-01-21-16-28-39.jpg"></img>
